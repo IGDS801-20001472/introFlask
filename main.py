@@ -1,10 +1,33 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("layout2.html")
+
+@app.route("/resultado", methods=["GET","POST"])
+def resultado():
+    if request.method == "POST":
+        num1 = request.form.get("n1")
+        num2 = request.form.get("n2")
+        return "La mutiplicacion de {} * {} = {}".format(num1, num2, str(int(num1) * int(num2)))
+    else:
+        return '''
+            <form action="/resultado" method="POST">
+                <label>N1</label>
+                <input type="text" name="n1"></input><br>
+                <label>N2</label>
+                <input type="text" name="n2"></input><br>
+                <input type="submit">
+            </form>
+            '''
+
+@app.route("/operabas")
+def operabas():
+    return render_template("operabas.html")
+
+
 
 @app.route("/alumnos")
 def alumnos():
