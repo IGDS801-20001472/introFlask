@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import forms
 
 app = Flask(__name__)
 
@@ -29,11 +30,13 @@ def operabas():
 
 
 
-@app.route("/alumnos")
+@app.route("/alumnos", methods = ['GET', 'POST'])
 def alumnos():
-    titulo = "UTL"
-    nombres = ["Mario", "Pedro", "Ulises"]
-    return render_template("Alumnos.html", titulo = titulo, nombres = nombres)
+    alumno_clase = forms.UserForm(request.form)
+    if request.method == 'POST':
+        pass
+
+    return render_template("Alumnos.html", form = alumno_clase)
 
 @app.route("/maestros")
 def maestros():
